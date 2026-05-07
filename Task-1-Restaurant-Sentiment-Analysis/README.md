@@ -120,4 +120,4 @@ Open: **http://localhost:5000**
 
 **This project fully satisfies all requirements mentioned in Task 1.**
 
-**Made with ❤️ by Venkata Sai Ajith**
+**Made by Venkata Sai Ajith**
