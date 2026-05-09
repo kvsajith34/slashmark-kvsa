@@ -1,0 +1,63 @@
+name: CI
+# Runs the full test suite + a quick CLI smoke test on every push/PR
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Download NLTK data
+        run: |
+          python -c "
+          import nltk
+          for pkg in ['punkt_tab', 'stopwords', 'wordnet', 'averaged_perceptron_tagger_eng']:
+              nltk.download(pkg, quiet=True)
+          print('NLTK ready')
+          "
+
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --cov=plagiarism_detector --cov-report=term-missing
+
+      - name: Run CLI smoke test
+        run: |
+          python cli.py --dir sample_documents/ --threshold 0.65 --no-html --no-json --quiet
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff
+      - run: ruff check plagiarism_detector/ cli.py --select E,W,F --ignore E501

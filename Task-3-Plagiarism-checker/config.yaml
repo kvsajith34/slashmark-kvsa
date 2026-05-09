@@ -1,0 +1,42 @@
+# ============================================================
+# Plagiarism Detector config — tweak these until the results feel right
+# ============================================================
+# Everything here can be overridden from the command line.
+# I usually start with the defaults and adjust based on a few real runs.
+
+# How picky we are. Anything >= this composite score gets flagged.
+# 0.75 is my usual starting point — lower it if you're seeing too many false positives.
+threshold: 0.75
+
+# --- TF-IDF vectorizer ---
+# n-gram range: [min, max].  (1, 2) = unigrams + bigrams.
+ngram_range: [1, 2]
+
+# Vocabulary cap. Set to null for no limit.
+max_features: 10000
+
+# --- Text pre-processing ---
+remove_stopwords: true
+lemmatize: true
+remove_numbers: false
+
+# Extra domain-specific stop-words (add any topic-specific noise words)
+extra_stopwords: []
+#  - "introduction"
+#  - "conclusion"
+
+# --- Similarity method weights ---
+# Must be positive numbers; they are normalised internally.
+weights:
+  tfidf: 0.5
+  fuzzy: 0.3
+  semantic: 0.2
+
+# --- Fuzzy matching ---
+# Options: ratio | partial_ratio | token_sort_ratio
+fuzzy_method: token_sort_ratio
+
+# --- Semantic similarity (spaCy) ---
+# Turn this on if you want meaning-level matching (catches good paraphrases).
+# You'll need: pip install spacy && python -m spacy download en_core_web_md
+use_semantic: false
