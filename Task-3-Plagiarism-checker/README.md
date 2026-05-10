@@ -177,7 +177,7 @@ MIT. Do whatever you want with it. Just don’t blame me if it misses something 
 
 ---
 
-Built with ❤️ (and a healthy dose of frustration at bad academic writing) using scikit-learn, NLTK, rapidfuzz, and occasionally spaCy.
+Built using scikit-learn, NLTK, rapidfuzz, and occasionally spaCy.
 
 ---
 
