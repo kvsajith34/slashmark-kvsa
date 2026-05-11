@@ -1,0 +1,46 @@
+lane_detector:
+  # Canny edge detection thresholds
+  canny_low: 50
+  canny_high: 150
+  gaussian_kernel: 5
+
+  # Hough transform parameters
+  rho: 2
+  theta: 0.0174533  # pi/180
+  threshold: 15
+  min_line_length: 40
+  max_line_gap: 20
+
+  # Region of interest (normalized to image size or absolute pixels)
+  # For 960x540 typical dashcam
+  roi_vertices: [[80, 540], [440, 320], [520, 320], [880, 540]]
+
+  # Advanced options
+  use_perspective_transform: true
+  perspective_src: [[200, 720], [1100, 720], [595, 450], [685, 450]]  # example for larger images
+  perspective_dst: [[300, 720], [980, 720], [300, 0], [980, 0]]
+
+  # Temporal smoothing (number of frames to average)
+  smoothing_window: 5
+
+pid_controller:
+  kp: 0.9
+  ki: 0.002
+  kd: 0.3
+  max_steer_deg: 25.0
+  max_integral: 100.0          # anti-windup
+  derivative_filter_alpha: 0.2  # low-pass filter
+
+pipeline:
+  input_width: 960
+  input_height: 540
+  throttle: 0.65
+  cte_threshold_m: 0.5         # for lane keeping score
+  temporal_smoothing: true
+  metrics_window: 50
+  output_fps: 25
+
+simulation:
+  duration_sec: 45
+  speed_mps: 20.0
+  track_waypoints: "data/lake_track_waypoints.csv"  # optional
