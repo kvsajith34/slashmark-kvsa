@@ -1,0 +1,82 @@
+# AetherNav .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & Data
+*.log
+logs/
+*.csv
+*.h5
+*.pth
+*.pt
+backend/models/*.pth
+backend/models/*.onnx
+datasets/raw/
+datasets/processed/
+*.zip
+*.tar.gz
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.next/
+*.local
+
+# Simulation outputs
+simulations/recordings/
+visualization/outputs/
+
+# AirSim / Gazebo (if used)
+AirSim/
+*.rec
+settings.json
+
+# Secrets
+.env
+*.pem
+secrets.yaml
+
+# Temporary
+tmp/
+temp/
+.cache/

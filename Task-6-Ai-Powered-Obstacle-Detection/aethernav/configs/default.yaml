@@ -1,0 +1,63 @@
+# AetherNav Configuration - Production Defaults
+# Edit these values for your environment / hardware
+
+system:
+  name: "AetherNav"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"
+
+perception:
+  # Use "mock" for instant demo without heavy models
+  # Use "yolov8n" or "yolov8s" after `pip install ultralytics`
+  detector_model: "mock"          
+  depth_model: "mock"             # "midas_small" requires download
+  input_size: [640, 480]
+  confidence_threshold: 0.55
+  nms_threshold: 0.45
+  classes: ["wall", "chair", "table", "person", "door", "obstacle", "dynamic"]
+
+navigation:
+  max_linear_speed: 1.2          # m/s
+  max_angular_speed: 1.8         # rad/s
+  safety_distance: 1.0           # meters - emergency stop
+  warning_distance: 2.5
+  planner_resolution: 0.25       # grid cell size (m)
+  replan_interval: 0.8           # seconds
+  pid:
+    kp_linear: 1.8
+    ki_linear: 0.05
+    kd_linear: 0.4
+    kp_angular: 2.2
+    ki_angular: 0.08
+    kd_angular: 0.6
+
+simulation:
+  room_width: 14.0
+  room_height: 9.0
+  num_static_obstacles: 7
+  num_dynamic_obstacles: 3
+  drone_start_pos: [2.0, 4.5]
+  drone_start_yaw: 0.0
+  fps: 60
+  sensor_noise: 0.08             # Gaussian noise on depth readings
+  enable_collisions: true
+
+telemetry:
+  update_rate_hz: 30
+  save_logs: true
+  log_dir: "logs/"
+  alert_cooldown: 3.0
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["http://localhost:5173", "http://localhost:3000"]
+
+# AirSim Integration (see docs/airsim.md)
+airsim:
+  enabled: false
+  ip: "127.0.0.1"
+  port: 41451
+  vehicle_name: "Drone1"
+  camera_name: "0"
